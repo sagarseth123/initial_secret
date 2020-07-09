@@ -11,7 +11,7 @@ const passport = require('passport');
 const findOrCreate = require("mongoose-findorcreate");
 const passportLocalMongoose = require("passport-local-mongoose");
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+//var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 const app = express();
@@ -81,7 +81,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/secrets"
+        callbackURL: " https://tranquil-garden-42667.herokuapp.com/auth/google/secrets"
     },
     function(accessToken, refreshToken, profile, cb) {
         console.log(profile);
@@ -95,18 +95,18 @@ passport.use(new GoogleStrategy({
 
 //facebook authentication
 
-passport.use(new FacebookStrategy({
-        clientID: process.env.FACEBOOK_APP_ID,
-        clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/secrets"
-    },
-    function(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
-        User.findOrCreate({ facebookId: profile.id }, function(err, user) {
-            return cb(err, user);
-        });
-    }
-));
+//passport.use(new FacebookStrategy({
+//       clientID: process.env.FACEBOOK_APP_ID,
+//        clientSecret: process.env.FACEBOOK_APP_SECRET,
+//        callbackURL: "http://localhost:3000/auth/facebook/secrets"
+//    },
+//    function(accessToken, refreshToken, profile, cb) {
+//        console.log(profile);
+//      User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+//          return cb(err, user);
+//      });
+//  }
+//));
 
 
 
@@ -204,15 +204,15 @@ app.get('/auth/google/secrets',
 
 
 // facebook auth
-app.get('/auth/facebook',
-    passport.authenticate('facebook'));
+//app.get('/auth/facebook',
+//   passport.authenticate('facebook'));
 
-app.get('/auth/facebook/secrets',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/secrets');
-    });
+////app.get('/auth/facebook/secrets',
+///    passport.authenticate('facebook', { failureRedirect: '/login' }),
+//    function(req, res) {
+// Successful authentication, redirect home.
+//       res.redirect('/secrets');
+//   });
 
 
 
