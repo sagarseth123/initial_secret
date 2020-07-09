@@ -1,0 +1,36 @@
+body {
+    background-color: #E8ECEF;
+}
+
+.centered {
+    text-align: center;
+}
+
+.secret-text {
+    text-align: center;
+    font-size: 2rem;
+    color: #fff;
+    background-color: #000;
+}
+
+.box {
+    font-size: 250%;
+    background-color: gray;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.card {
+    margin-bottom: 10vh;
+}
+
+i {
+    text-align: left;
+    padding-left: 0.5em;
+    font-size: 30px;
+    height: 30px;
+}
+
+.card-header {
+    margin-left: 0px;
+}

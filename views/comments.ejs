@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+    <div class="jumbotron text-centre">
+        <h1>Comments</h1>
+
+        <% post.forEach(item=>{ %>
+            <hr>
+            <div>
+                <h4>
+                    <%= item.person %>
+                </h4>
+                <h5>
+                    <%= item.com %>
+                </h5>
+            </div>
+            <hr>
+            <% }) %>
+
+
+
+
+    </div>
+
+    <%- include('partials/footer') %>
