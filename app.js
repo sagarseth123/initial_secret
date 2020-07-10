@@ -6,12 +6,18 @@ var reload = require("reload");
 const ejs = require("ejs");
 const date = require(__dirname + "/date.js");
 const session = require('express-session');
+
+const MemoryStore = require('memorystore')(session);
+
+
 const passport = require('passport');
+
+
 
 const findOrCreate = require("mongoose-findorcreate");
 const passportLocalMongoose = require("passport-local-mongoose");
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-//var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 const app = express();
@@ -19,13 +25,29 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(session({
+//   secret: 'secret must be kept secret',
+//   resave: false,
+//   saveUninitialized: true,
+//at saveUninitialize:true,it will remail login untill we logout
+// but at "false" it will logout whenever we close secrets tab
+//}));
+
+
 app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
     secret: 'secret must be kept secret',
     resave: false,
     saveUninitialized: true,
-    //at saveUninitialize:true,it will remail login untill we logout
-    // but at "false" it will logout whenever we close secrets tab
+
 }));
+
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -79,12 +101,13 @@ passport.deserializeUser(function(id, done) {
 //google authentication
 
 passport.use(new GoogleStrategy({
-        clientID: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: " https://tranquil-garden-42667.herokuapp.com/auth/google/secrets"
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:3000/auth/google/secrets"
     },
     function(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
+        console.log(process.env.CLIENT_ID);
+        //console.log(profile);
         User.findOrCreate({ googleId: profile.id }, function(err, user) {
             return cb(err, user);
 
@@ -95,18 +118,18 @@ passport.use(new GoogleStrategy({
 
 //facebook authentication
 
-//passport.use(new FacebookStrategy({
-//       clientID: process.env.FACEBOOK_APP_ID,
-//        clientSecret: process.env.FACEBOOK_APP_SECRET,
-//        callbackURL: "http://localhost:3000/auth/facebook/secrets"
-//    },
-//    function(accessToken, refreshToken, profile, cb) {
-//        console.log(profile);
-//      User.findOrCreate({ facebookId: profile.id }, function(err, user) {
-//          return cb(err, user);
-//      });
-//  }
-//));
+passport.use(new FacebookStrategy({
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: "http://localhost:3000/auth/facebook/secrets"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(profile);
+        User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+            return cb(err, user);
+        });
+    }
+));
 
 
 
@@ -204,15 +227,15 @@ app.get('/auth/google/secrets',
 
 
 // facebook auth
-//app.get('/auth/facebook',
-//   passport.authenticate('facebook'));
+app.get('/auth/facebook',
+    passport.authenticate('facebook'));
 
-////app.get('/auth/facebook/secrets',
-///    passport.authenticate('facebook', { failureRedirect: '/login' }),
-//    function(req, res) {
-// Successful authentication, redirect home.
-//       res.redirect('/secrets');
-//   });
+app.get('/auth/facebook/secrets',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/secrets');
+    });
 
 
 
@@ -348,7 +371,7 @@ app.post("/show_comment", function(req, res) {
 
 
 //app.listen(3000, function() {
-//   console.log("the server is running at port 3000");
+//    console.log("the server is running at port 3000");
 //});
 
 
