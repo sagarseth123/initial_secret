@@ -373,3 +373,6 @@ if (port == null || port == "") {
     port = 8080;
 }
 app.listen(port);
+
+
+//git config --global core.autocrlf true
