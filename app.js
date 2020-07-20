@@ -100,21 +100,20 @@ passport.deserializeUser(function(id, done) {
 
 //google authentication
 
-passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        //callbackURL: "http://localhost:3000/auth/google/secrets"
-        callbackURL: 'http://127.0.0.1:1337/auth/google/callback'
-    },
-    function(accessToken, refreshToken, profile, cb) {
-        //console.log(process.env.CLIENT_ID);
-        //console.log(profile);
-        User.findOrCreate({ googleId: profile.id }, function(err, user) {
-            return cb(err, user);
+//passport.use(new GoogleStrategy({
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//        callbackURL: "http://localhost:3000/auth/google/secrets"
+//    },
+//    function(accessToken, refreshToken, profile, cb) {
+//        //console.log(process.env.CLIENT_ID);
+//console.log(profile);
+//       User.findOrCreate({ googleId: profile.id }, function(err, user) {
+//           return cb(err, user);
 
-        });
-    }
-));
+//       });
+//   }
+//));
 
 
 //facebook authentication
@@ -217,14 +216,14 @@ function checkAuthentication(req, res, next) {
 
 
 //google auth
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile'] }));
-app.get('/auth/google/secrets',
-    passport.authenticate('google', { failureRedirect: '/register' }),
-    function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/secrets');
-    });
+//app.get('/auth/google',
+//    passport.authenticate('google', { scope: ['profile'] }));
+//app.get('/auth/google/secrets',
+//   passport.authenticate('google', { failureRedirect: '/register' }),
+//    function(req, res) {
+// Successful authentication, redirect home.
+//       res.redirect('/secrets');
+//   });
 
 
 // facebook auth
