@@ -16,12 +16,12 @@
             </div>
             <div class="card-footer">
                 <div class="row">
-                    <div class="col-3">
+                    <div style="margin-left: 0px;" class="col-3">
 
                         <iframe name="<%= men._id %>" style="display:none;"></iframe>
                         <form action="/like" method="POST" target="<%= men._id %>">
 
-                            <button type="submit" name="click" value="<%= men._id %>"> <i class="fa fa-heart" onClick="window.location.reload();"></i>
+                            <button class="btn btn-sm" type="submit" name="click" value="<%= men._id %>"> <i class="fa fa-heart" onClick="window.location.reload();"></i>
                             <input type="hidden" name="person" value="<%= user._id %>">
                     <%= men.likes.length %>
                 </button>
@@ -38,12 +38,12 @@
                         </form>
 
                     </div>
-                    <div class="col-8">
+                    <div style="margin-right:0px;" class="col-7">
 
                         <form action="/comment" method="POST" target="<%= men._id %>">
-                            <input type="text" name="comment" placeholder="comments">
+                            <input style="width: 101px;" type="text" name="comment" placeholder="comments">
                             <input type="hidden" name="user" value="<%= user.name %>">
-                            <button type="submit" name="press" value="<%= men._id %>" onClick="window.location.reload();">submit</button>
+                            <button class="btn btn-sm" type="submit" name="press" value="<%= men._id %>" onClick="window.location.reload();">submit</button>
 
                         </form>
                     </div>
