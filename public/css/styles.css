@@ -13,6 +13,14 @@ body {
     background-color: #000;
 }
 
+p {
+    font-size: 18px;
+}
+
+.nav-item {
+    font-size: 20px;
+}
+
 .box {
     font-size: 250%;
     background-color: gray;
