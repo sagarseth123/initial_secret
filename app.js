@@ -376,3 +376,14 @@ app.listen(port);
 
 
 //git config --global core.autocrlf true
+
+
+//<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+//            <span class="navbar-toggler-icon"></span>
+//       </button>
+
+
+//<div class="collapse navbar-collapse" id="collapsibleNavbar"></div>
+
+//<ul class="navbar-nav ml-auto">
+//               <li class="nav-item active"></li>

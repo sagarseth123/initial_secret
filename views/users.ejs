@@ -1,58 +1,58 @@
 <%- include('partials/header') %>
 
 
-    <div class="jumbotron">
 
-        <% found.forEach(men=>{ %>
-            <div class="card">
-                <div class="card-header row">
-                    <i class="fab fa-studiovinari icon-large"></i>
-                    <%= men.date %>
-                </div>
-                <div class="card-body secrets">
-                    <p class="jumbotron text-center box" style="text-align: center;">
-                        <%= men.secret %>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-3">
 
-                            <iframe name="<%= men._id %>" style="display:none;"></iframe>
-                            <form action="/like" method="POST" target="<%= men._id %>">
+    <% found.forEach(men=>{ %>
+        <div class="card">
+            <div class="card-header row">
+                <i class="fab fa-studiovinari icon-large"></i>
+                <%= men.date %>
+            </div>
+            <div class="card-body secrets">
+                <p class="jumbotron text-center box" style="text-align: center;">
+                    <%= men.secret %>
+                </p>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-3">
 
-                                <button type="submit" name="click" value="<%= men._id %>"> <i class="fa fa-heart" onClick="window.location.reload();"></i>
+                        <iframe name="<%= men._id %>" style="display:none;"></iframe>
+                        <form action="/like" method="POST" target="<%= men._id %>">
+
+                            <button type="submit" name="click" value="<%= men._id %>"> <i class="fa fa-heart" onClick="window.location.reload();"></i>
                             <input type="hidden" name="person" value="<%= user._id %>">
                     <%= men.likes.length %>
                 </button>
 
-                            </form>
-
-                        </div>
-
-                        <div class="col-2">
-
-                            <form action="show_comment" method="POST">
-                                <input type="hidden" name="show" value="<%= men._id %>">
-                                <button style="border:none;" type="submit"> <i class="fa fa-eye" aria-hidden="true"></i></button>
-                            </form>
-
-                        </div>
-                        <div class="col-7">
-
-                            <form action="/comment" method="POST" target="<%= men._id %>">
-                                <input type="text" name="comment" placeholder="comments">
-                                <input type="hidden" name="user" value="<%= user.name %>">
-                                <button type="submit" name="press" value="<%= men._id %>" onClick="window.location.reload();">submit</button>
-
-                            </form>
-                        </div>
+                        </form>
 
                     </div>
+
+                    <div class="col-1">
+
+                        <form action="show_comment" method="POST">
+                            <input type="hidden" name="show" value="<%= men._id %>">
+                            <button style="border:none;" type="submit"> <i class="fa fa-eye fa-sm" aria-hidden="true"></i></button>
+                        </form>
+
+                    </div>
+                    <div class="col-8">
+
+                        <form action="/comment" method="POST" target="<%= men._id %>">
+                            <input type="text" name="comment" placeholder="comments">
+                            <input type="hidden" name="user" value="<%= user.name %>">
+                            <button type="submit" name="press" value="<%= men._id %>" onClick="window.location.reload();">submit</button>
+
+                        </form>
+                    </div>
+
                 </div>
             </div>
-            <% }) %>
-    </div>
+        </div>
+        <% }) %>
+            </div>
 
 
 
@@ -63,7 +63,7 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="myScript.js"></script>
+            <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+            <script src="myScript.js"></script>
 
-    <%- include('partials/footer') %>
+            <%- include('partials/footer') %>
