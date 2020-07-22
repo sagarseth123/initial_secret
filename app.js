@@ -299,7 +299,7 @@ app.post("/submit", function(req, res) {
         secret: req.body.secret,
         comments: [],
         likes: [" "],
-        date: day,
+        date: date(),
         person: req.user._id
 
     });
