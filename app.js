@@ -291,7 +291,7 @@ app.post("/name", function(req, res) {
 });
 
 
-
+console.log(date());
 app.post("/submit", function(req, res) {
     let day = date();
     const secret = new Secret({
@@ -373,6 +373,10 @@ if (port == null || port == "") {
     port = 8080;
 }
 app.listen(port);
+
+
+
+//https://tranquil-garden-42667.herokuapp.com/
 
 
 //git config --global core.autocrlf true
