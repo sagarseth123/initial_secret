@@ -16,6 +16,7 @@ const passport = require('passport');
 
 const findOrCreate = require("mongoose-findorcreate");
 const passportLocalMongoose = require("passport-local-mongoose");
+const { sortBy } = require("lodash");
 //var GoogleStrategy = require('passport-google-oauth20').Strategy;
 //var FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -75,6 +76,7 @@ var secretSchema = new mongoose.Schema({
     comments: Array,
     likes: Array,
     date: String,
+    count: Number,
     person: String
 
 });
@@ -168,7 +170,8 @@ app.get("/submit", checkAuthentication, function(req, res) {
 
 app.get('/users', checkAuthentication, function(req, res) {
     //console.log(req.user._id);
-    Secret.find({ secret: { $ne: null } }).sort({ date: -1 }).exec(function(err, userFound) {
+    //Secret.find({ secret: { $ne: null } }).sort({ date: -1 }).exec(function(err, userFound) {
+    Secret.find({}).sort({ count: -1 }).exec(function(err, userFound) {
         //Secret.find({ secret: { $ne: null } }, function(err, userFound) {
         if (userFound) {
             //console.log(userFound);
@@ -183,7 +186,8 @@ app.get('/users', checkAuthentication, function(req, res) {
 
 app.get('/secrets', checkAuthentication, function(req, res) {
 
-    Secret.find({ person: req.user._id }, function(err, found) {
+    //Secret.find({ person: req.user._id }, function(err, found) {
+    Secret.find({ person: req.user._id }).sort({ count: -1 }).exec(function(err, found) {
         res.render("secrets", { my: found, me: req.user });
     });
 
@@ -294,16 +298,21 @@ app.post("/name", function(req, res) {
 console.log(date());
 app.post("/submit", function(req, res) {
     let day = date();
-    const secret = new Secret({
+    Secret.countDocuments({}, function(err, no_of_secrets) {
+        var change = no_of_secrets + 1;
 
-        secret: req.body.secret,
-        comments: [],
-        likes: [" "],
-        date: day,
-        person: req.user._id
+        const secret = new Secret({
 
+            secret: req.body.secret,
+            comments: [],
+            likes: [" "],
+            date: day,
+            count: change,
+            person: req.user._id
+
+        });
+        secret.save();
     });
-    secret.save();
     res.redirect("/secrets");
 });
 
