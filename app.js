@@ -26,13 +26,6 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(session({
-//   secret: 'secret must be kept secret',
-//   resave: false,
-//   saveUninitialized: true,
-//at saveUninitialize:true,it will remail login untill we logout
-// but at "false" it will logout whenever we close secrets tab
-//}));
 
 
 app.use(session({
@@ -386,6 +379,10 @@ app.listen(port);
 
 
 //https://tranquil-garden-42667.herokuapp.com/
+
+
+//now this is mobile application made by watching a vedio and after that changing a index.html with website link from the complete project
+//link of a video is: https://www.youtube.com/watch?v=uRhIYSHPD_8
 
 
 //git config --global core.autocrlf true
