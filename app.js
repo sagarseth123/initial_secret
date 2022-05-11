@@ -47,7 +47,7 @@ app.use(passport.session());
 
 
 
-mongoose.connect("mongodb+srv://seth4444:seth4444@cluster2.yf9no.mongodb.net/user_secrets", {
+mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
